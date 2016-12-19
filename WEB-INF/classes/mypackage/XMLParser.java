@@ -8,7 +8,7 @@ import java.util.*;
 import java.io.*;
 
 public class XMLParser extends DefaultHandler {
-	private String fileContent
+	private String fileContent;
 	private String forReturn;
 	private DBController db;
 	private ResultSet rs;
@@ -33,9 +33,8 @@ public class XMLParser extends DefaultHandler {
 		try {
 			if (localName.equals("login")) {
 				String username = atts.getValue("username");
-				String password = atts.getValue("password");
 				String userType = atts.getValue("userType");
-				rs = db.select(userType, "id", "name = '" + username + "'");
+				rs = db.select(userType, "id", "username = '" + username + "'");
 				if (rs.next()) {
 					String id = rs.getString(1);
 					Random r = new Random();
@@ -57,9 +56,10 @@ public class XMLParser extends DefaultHandler {
 					throw new Exception("Incorrect ID.");
 			} else if (localName.equals("logout")) {
 				String sessionId = atts.getValue("sessionId");
-				rs = db.select("Guest", "id", "sessionId = '" + sessionId + "'");
+				String userType = atts.getValue("userType");
+				rs = db.select(userType, "id", "sessionId = '" + sessionId + "'");
 				if (rs.next()) {
-					db.update("Guest", "set sessionId=\"\"", "id = " + rs.getInt(1));
+					db.update(userType, "set sessionId=\"\"", "id = " + rs.getInt(1));
 					forReturn += XMLGenerator.getSuccessResponse("Logout Successful");
 				} else
 					throw new Exception("Not logged in.");
@@ -79,7 +79,7 @@ public class XMLParser extends DefaultHandler {
 		}
 	}
 	
-	public String invoke() {
+	public String invoke() throws Exception {
 		SAXParserFactory spf = SAXParserFactory.newInstance();
 		spf.setNamespaceAware(true);
 		SAXParser saxParser = spf.newSAXParser();
