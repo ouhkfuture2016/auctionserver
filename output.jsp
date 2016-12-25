@@ -1,13 +1,12 @@
 <%@ page import="mypackage.*" %>
-<%@ page import="java.io.*" %>
 <html>
-	<body>
+	<body>	
 		<%
-			XMLParser a = new XMLParser(request.getParameter("xml"));
+			MainController mc = new MainController();
 		%>
 		Receive Output:
 		<br>
-		<textarea name="output" rows="15" cols="60"><%=a.invoke()%></textarea>
+		<textarea name="output" rows="15" cols="60"><%=mc.getResponse(request.getParameter("xml"))%></textarea>
 		<br>
 	</body>
 </html>
