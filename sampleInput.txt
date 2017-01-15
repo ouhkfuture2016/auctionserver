@@ -1,0 +1,29 @@
+<message>
+	<login username="guest" password="guest" userType="Guest" />
+</message>
+
+<message>
+	<login username="host" password="host" userType="Host" />
+</message>
+
+<message>
+	<login username="admin" password="admin" userType="Admin" />
+</message>
+
+<message sessionId="HCKCKHSIKWSZSDLZFKEE" userType="Host">
+	<logout  />
+</message>
+
+<message sessionId="LYEFMINEJAOOFVIFSDGL" userType="Host">
+	<select table="finance" />
+</message>
+
+<message sessionId="LYEFMINEJAOOFVIFSDGL" userType="Host">
+	<insert table="guest" values="null, 'aaa', 'bbb', null, null" />
+</message>
+
+<message>
+	<login username="admin" password="admin" userType="Admin" />
+<update table="guest" set="password='ccc'" condition="id=10" />
+<update table="guest" set="password='ddd'" condition="id=11" />
+</message>

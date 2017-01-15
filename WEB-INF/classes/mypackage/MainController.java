@@ -230,11 +230,15 @@ public class MainController {
 	}
 	
 	public boolean renewSession(XMLGenerator xmlGen, DBController db, String sessionId, String userType) throws Exception {
+		return renewSession(xmlGen, db, sessionId, userType, 0);
+	}
+	
+	public boolean renewSession(XMLGenerator xmlGen, DBController db, String sessionId, String userType, int addTime) throws Exception {
 		Hashtable<String, String> ht = new Hashtable<>();
 		if (isLoginNotExpired(db, sessionId, userType)) {
 			db.update(
 				userType, 
-				"expiryts = '" + new Timestamp(new java.util.Date().getTime() + 300 * 1000).toString() + "'", 
+				"expiryts = '" + new Timestamp(new java.util.Date().getTime() + addTime * 1000 + 300 * 1000).toString() + "'", 
 				"sessionId = '" + sessionId + "'"
 				);
 			return true;
